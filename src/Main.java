@@ -1,14 +1,17 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
 
     static AntennaArray antennaArray;
     public static void main(String[] args) {
-        int numberOfAntennae = 7;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the number of antennae");
+        int numberOfAntennae = scanner.nextInt();
+        antennaArray = new AntennaArray(numberOfAntennae, 90);
         double[] globalBest = antennaArray.generateRandomSolutions(numberOfAntennae);
 
-        antennaArray = new AntennaArray(numberOfAntennae, 90);
 
         ArrayList<Particle> swarm = new ArrayList<>();
 
@@ -22,11 +25,11 @@ public class Main {
             swarm.get(i).printVelocity();
             System.out.println();
         }
-
+        System.out.println("Enter the number of cycles");
+        int numberOfGenerations = scanner.nextInt();
         boolean running = true;
-        int apple = 0;
-
-        while (apple < 10) {
+        int currentGeneration = 0;
+        while (currentGeneration < numberOfGenerations) {
             globalBest = updateGlobalBest(swarm, globalBest);
              System.out.print("global best: ");
              printArray(globalBest);
@@ -53,7 +56,7 @@ public class Main {
                  }
              }
 
-             apple++;
+             currentGeneration++;
         }
         System.out.println("Global best: ");
         printArray(globalBest);
